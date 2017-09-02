@@ -1,0 +1,90 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .DS_Store
+* .git
+* .gitignore
+* .idea/
+* .idea/compiler.xml
+* .idea/copyright/
+* .idea/copyright/profiles_settings.xml
+* .idea/encodings.xml
+* .idea/hwdemo.iml
+* .idea/misc.xml
+* .idea/modules.xml
+* .idea/vcs.xml
+* .idea/workspace.xml
+* proguard-project.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:18.+
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => hwdemo/src/main/AndroidManifest.xml
+* assets/ => hwdemo/src/main/assets/
+* libs/IDCReaderSDK.jar => hwdemo/libs/IDCReaderSDK.jar
+* libs/armeabi/libhwdevices.so => hwdemo/src/main/jniLibs/armeabi/libhwdevices.so
+* libs/armeabi/libidcard.so => hwdemo/src/main/jniLibs/armeabi/libidcard.so
+* libs/armeabi/libkeyboard.so => hwdemo/src/main/jniLibs/armeabi/libkeyboard.so
+* libs/armeabi/libkkcard.so => hwdemo/src/main/jniLibs/armeabi/libkkcard.so
+* libs/armeabi/libkkidreader.so => hwdemo/src/main/jniLibs/armeabi/libkkidreader.so
+* libs/armeabi/libkkmifareonecard.so => hwdemo/src/main/jniLibs/armeabi/libkkmifareonecard.so
+* libs/armeabi/libkkonekeyboard.so => hwdemo/src/main/jniLibs/armeabi/libkkonekeyboard.so
+* libs/armeabi/libkkpark.so => hwdemo/src/main/jniLibs/armeabi/libkkpark.so
+* libs/armeabi/libkkutils.so => hwdemo/src/main/jniLibs/armeabi/libkkutils.so
+* libs/armeabi/libprint.so => hwdemo/src/main/jniLibs/armeabi/libprint.so
+* libs/armeabi/libserial.so => hwdemo/src/main/jniLibs/armeabi/libserial.so
+* libs/armeabi/libzigbeeserial.so => hwdemo/src/main/jniLibs/armeabi/libzigbeeserial.so
+* libs/hwlibs.jar => hwdemo/libs/hwlibs.jar
+* lint.xml => hwdemo/lint.xml
+* res/ => hwdemo/src/main/res/
+* src/ => hwdemo/src/main/java/
+* src/com/eztor/zbdevices/.DS_Store => hwdemo/src/main/resources/com/eztor/zbdevices/.DS_Store
+
+Missing Android Support Repository:
+-----------------------------------
+Some useful libraries, such as the Android Support Library, are
+installed from a special Maven repository, which should be installed
+via the SDK manager.
+
+It looks like this library is missing from your SDK installation at:
+null
+
+To install it, open the SDK manager, and in the Extras category,
+select "Android Support Repository". You may also want to install the
+"Google Repository" if you want to use libraries like Google Play
+Services.
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
