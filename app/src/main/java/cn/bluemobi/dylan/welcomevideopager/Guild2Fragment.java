@@ -32,8 +32,9 @@ public class Guild2Fragment extends LazyLoadFragment {
         } else if (index == 2) {
             uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.loveyou);
         } else {
-            uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.welecome_c);
+            uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.loveyou);
         }
+
         /**播放视频**/
         customVideoView.playVideo(uri);
         exit.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +43,16 @@ public class Guild2Fragment extends LazyLoadFragment {
                 System.exit(0);
             }
         });
+
+//        uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.manlian3);
+////调用系统自带的播放器
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        Log.v("URI:::::::::", uri.toString());
+//        intent.setDataAndType(uri, "video/mp4");
+//        startActivity(intent);
     }
+
+
 
     @Override
     protected void stopLoad() {

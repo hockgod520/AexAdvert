@@ -1,7 +1,9 @@
 package cn.bluemobi.dylan.welcomevideopager;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,6 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView iv3;
     private Button bt_start;
     private List<Fragment> fragments;
+
     private void assignViews() {
         vp = (ViewPager) findViewById(R.id.vp);
         iv1 = (ImageView) findViewById(R.id.iv1);
@@ -30,14 +35,22 @@ public class MainActivity extends AppCompatActivity {
         bt_start = (Button) findViewById(R.id.bt_start);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题
+        //全屏设置，隐藏窗口所有装饰
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);//清除FLAG
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(MainActivity.this,MusicServer.class);
-        startService(intent);
-        Log.e("MainActivity", "MusicSerice onCreate()");
+//        Intent intent = new Intent(MainActivity.this, MusicServer.class);
+//        startService(intent);
+//        Log.e("MainActivity", "MusicSerice onCreate()");
         assignViews();
+        //全屏的两种方式
+        //sendBroadcast(new Intent("com.android.action.hide_navigationbar"));
+        vp.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         initData();
         initView();
     }

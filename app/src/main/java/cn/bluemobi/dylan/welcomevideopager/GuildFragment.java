@@ -24,11 +24,11 @@ public class GuildFragment extends Fragment {
         int index = getArguments().getInt("index");
         Uri uri;
         if (index == 1) {
-            uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.welecome_c);
+            uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.manlian_1080);
         } else if (index == 2) {
-            uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.loveyou);
+            uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.manlian_1080);
         } else {
-            uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.loveyou);
+            uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.manlian_1080);
         }
         /**播放视频**/
         customVideoView.playVideo(uri);

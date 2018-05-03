@@ -1,11 +1,18 @@
 package cn.bluemobi.dylan.welcomevideopager;
 
 import android.content.Context;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 import android.widget.VideoView;
+
+import java.util.HashMap;
 
 /**
  * 可以播放视频的View
@@ -13,6 +20,10 @@ import android.widget.VideoView;
  */
 
 public class CustomVideoView extends VideoView {
+
+    private int mVideoWidth;
+    private int mVideoHeight;
+
     public CustomVideoView(Context context) {
         super(context);
     }
@@ -28,7 +39,55 @@ public class CustomVideoView extends VideoView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
+        Uri uri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.loveyou);
+        getPlayTime(uri.toString());
+        int width = SystemUtil.getScreenW(getContext());
+        int height = SystemUtil.getScreenH(getContext());
+        if (mVideoWidth > 0 && mVideoHeight > 0) {
+            if (mVideoWidth * height > width * mVideoHeight) {
+                height = width * mVideoHeight / mVideoWidth;
+            } else if (mVideoWidth * height < width * mVideoHeight) {
+                width = height * mVideoWidth / mVideoHeight;
+            } else {
+
+            }
+            Log.i("liyp_", "width = " + width + "/height = " + height + " \r\n" +
+                    "mVideoWidth = " + mVideoWidth + "/mVideoHeight = " + mVideoHeight);
+        }
+        setMeasuredDimension(width, height);
+        //setMeasuredDimension(View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD_MR1)
+    private void getPlayTime(String mUri) {
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        try {
+            if (mUri != null) {
+                HashMap<String, String> headers = null;
+                if (headers == null) {
+                    headers = new HashMap<String, String>();
+                    headers.put("User-Agent", "Mozilla/5.0 (Linux; U; Android 4.4.2; zh-CN; MW-KW-001 Build/JRO03C) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 UCBrowser/1.0.0.001 U4/0.8.0 Mobile Safari/533.1");
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    mmr.setDataSource(mUri, headers);
+                }
+            } else {
+                //mmr.setDataSource(mFD, mOffset, mLength);
+            }
+            String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);//时长(毫秒)
+            //宽
+            String width = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
+            //高
+            String height = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
+            mVideoWidth = Integer.parseInt(width);
+            mVideoHeight = Integer.parseInt(height);
+
+        } catch (Exception ex) {
+            Log.e("TAG", "MediaMetadataRetriever exception " + ex);
+        } finally {
+            mmr.release();
+        }
+
     }
 
     /**
