@@ -3,6 +3,8 @@ package com.androidex.advert;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,9 +18,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.bluemobi.dylan.welcomevideopager.R;
 
@@ -29,8 +34,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageView iv3;
     private Button bt_start;
     private List<Fragment> fragments;
+    private RelativeLayout rl_main;
+    private boolean isTouchUp = false;
+
 
     private void assignViews() {
+        rl_main = (RelativeLayout) findViewById(R.id.rl_main);
         vp = (ViewPager) findViewById(R.id.vp);
         iv1 = (ImageView) findViewById(R.id.iv1);
         iv2 = (ImageView) findViewById(R.id.iv2);
@@ -60,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        vp.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        rl_main.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     /**
@@ -87,9 +96,77 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 vp.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-                return false;
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        Log.e("liyp_", "手抬起");
+                        isTouchUp = true;
+                        startTimer();
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        Log.e("liyp_", "手按下");
+                        isTouchUp = false;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        isTouchUp = false;
+                        Log.e("liyp_", "手移动");
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                        isTouchUp = true;
+                        Log.e("liyp_", "取消手势");
+                        startTimer();
+                        break;
+                    default:
+                        break;
+                }
+                return true;
             }
         });
+        View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener
+                (new View.OnSystemUiVisibilityChangeListener() {
+                    @Override
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        if ((visibility & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0) {
+                            Log.e("liyp_", "底部菜单显示");
+                            // TODO: The system bars are visible. Make any desired
+                            isTouchUp = true;
+                            startTimer();
+                        } else {
+                            // TODO: The system bars are NOT visible. Make any desired
+                            Log.e("liyp_", "底部菜单隐藏");
+                            isTouchUp = false;
+                        }
+                    }
+                });
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    vp.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    };
+
+    public void startTimer() {
+        final Timer timer = new Timer();
+        final TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (isTouchUp) {
+                    handler.sendEmptyMessage(0);
+                }
+                Log.e("liyp_", "隐藏底部菜单");
+            }
+        };
+        timer.schedule(timerTask, 3000);
     }
 
     /**
