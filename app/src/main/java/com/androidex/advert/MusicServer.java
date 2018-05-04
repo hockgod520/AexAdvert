@@ -1,4 +1,4 @@
-package cn.bluemobi.dylan.welcomevideopager;
+package com.androidex.advert;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
+
+import cn.bluemobi.dylan.welcomevideopager.R;
 
 /**
  * Created by cts on 17/2/13.

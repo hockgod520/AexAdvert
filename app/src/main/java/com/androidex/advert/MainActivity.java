@@ -1,4 +1,4 @@
-package cn.bluemobi.dylan.welcomevideopager;
+package com.androidex.advert;
 
 import android.content.Intent;
 import android.os.Build;
@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,6 +19,8 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bluemobi.dylan.welcomevideopager.R;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager vp;
@@ -44,15 +47,20 @@ public class MainActivity extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);//清除FLAG
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
         setContentView(R.layout.activity_main);
-//        Intent intent = new Intent(MainActivity.this, MusicServer.class);
-//        startService(intent);
-//        Log.e("MainActivity", "MusicSerice onCreate()");
+        Intent intent = new Intent(MainActivity.this, MusicServer.class);
+        startService(intent);
+        Log.e("MainActivity", "MusicSerice onCreate()");
         assignViews();
         //全屏的两种方式
         //sendBroadcast(new Intent("com.android.action.hide_navigationbar"));
-        vp.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         initData();
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        vp.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     /**
@@ -60,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initData() {
         fragments = new ArrayList<>();
-
         Fragment fragment1 = new Guild2Fragment();
         Bundle bundle1 = new Bundle();
         bundle1.putInt("index", 3);
@@ -76,13 +83,19 @@ public class MainActivity extends AppCompatActivity {
         vp.setOffscreenPageLimit(1);
         vp.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
         vp.addOnPageChangeListener(new MyPageChangeListener());
+        vp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                vp.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                return false;
+            }
+        });
     }
 
     /**
      * ViewPager适配器
      */
     private class MyPageAdapter extends FragmentPagerAdapter {
-
 
         public MyPageAdapter(FragmentManager fm) {
             super(fm);

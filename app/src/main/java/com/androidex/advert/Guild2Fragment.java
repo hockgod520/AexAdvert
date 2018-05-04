@@ -1,9 +1,11 @@
-package cn.bluemobi.dylan.welcomevideopager;
+package com.androidex.advert;
 
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import cn.bluemobi.dylan.welcomevideopager.R;
 
 /**
  * Created by yuandl on 2016-11-10.
@@ -34,7 +36,6 @@ public class Guild2Fragment extends LazyLoadFragment {
         } else {
             uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.loveyou);
         }
-
         /**播放视频**/
         customVideoView.playVideo(uri);
         exit.setOnClickListener(new View.OnClickListener() {

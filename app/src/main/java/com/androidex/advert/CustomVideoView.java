@@ -1,4 +1,4 @@
-package cn.bluemobi.dylan.welcomevideopager;
+package com.androidex.advert;
 
 import android.content.Context;
 import android.media.MediaMetadataRetriever;
@@ -8,11 +8,11 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.util.HashMap;
+
+import cn.bluemobi.dylan.welcomevideopager.R;
 
 /**
  * 可以播放视频的View

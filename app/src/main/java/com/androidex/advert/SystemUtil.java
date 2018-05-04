@@ -1,4 +1,4 @@
-package cn.bluemobi.dylan.welcomevideopager;
+package com.androidex.advert;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -9,21 +9,16 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.graphics.Color;
 import android.location.LocationManager;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Vibrator;
 import android.support.v4.view.ViewCompat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package cn.bluemobi.dylan.welcomevideopager;
+package com.androidex.advert;
 
 import android.app.Application;
 import android.content.Intent;

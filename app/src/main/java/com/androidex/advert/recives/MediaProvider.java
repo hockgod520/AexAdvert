@@ -1,4 +1,4 @@
-package cn.bluemobi.dylan.welcomevideopager.recives;
+package com.androidex.advert.recives;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
